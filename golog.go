@@ -14,12 +14,12 @@ ERROR level指出虽然发生错误事件，但仍然不影响系统的继续运
 FATAL level指出每个严重的错误事件将会导致应用程序的退出。
 
 OFF Level是最高等级的，用于关闭所有日志记录。
- */
+*/
 
 import (
+	"fmt"
 	"io"
 	"log"
-	"fmt"
 	"os"
 )
 
@@ -40,42 +40,42 @@ type GoLog struct {
 
 func NewGoLog(out io.Writer, level int) *GoLog {
 	return &GoLog{
-		logger:log.New(out, fmt.Sprintf("[PID: %d] ", os.Getpid()), log.LstdFlags),
-		level:level,
+		logger: log.New(out, fmt.Sprintf("[PID: %d] ", os.Getpid()), log.LstdFlags),
+		level:  level,
 	}
 }
 
-func (this *GoLog) All(a interface{}) {
+func (this *GoLog) All(a ...interface{}) {
 	if ALL >= this.level {
 		this.logger.Println("ALL ", a)
 	}
 }
 
-func (this *GoLog) Debug(a interface{}) {
+func (this *GoLog) Debug(a ...interface{}) {
 	if DEBUG >= this.level {
 		this.logger.Println("DEBUG ", a)
 	}
 }
 
-func (this *GoLog) Info(a interface{}) {
+func (this *GoLog) Info(a ...interface{}) {
 	if INFO >= this.level {
 		this.logger.Println("INFO ", a)
 	}
 }
 
-func (this *GoLog) Warn(a interface{}) {
+func (this *GoLog) Warn(a ...interface{}) {
 	if WARN >= this.level {
 		this.logger.Println("WARN ", a)
 	}
 }
 
-func (this *GoLog) Error(a interface{}) {
+func (this *GoLog) Error(a ...interface{}) {
 	if ERROR >= this.level {
 		this.logger.Println("ERROR ", a)
 	}
 }
 
-func (this *GoLog) Fatal(a interface{}) {
+func (this *GoLog) Fatal(a ...interface{}) {
 	if FATAL >= this.level {
 		this.logger.Fatalln("FATAL ", a)
 	}
